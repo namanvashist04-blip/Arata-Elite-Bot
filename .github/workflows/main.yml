@@ -1,0 +1,26 @@
+name: 🔱 Arata Elite 24/7
+on:
+  schedule:
+    - cron: '*/30 * * * *' # Har 30 min mein automatic run ($0 cost)
+  workflow_dispatch: # Manual button testing ke liye
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📂 Checkout code
+        uses: actions/checkout@v2
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: 🛠️ Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: 🔱 Execute Arata Bot
+        env:
+          EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+          APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
+        run: python bot_v2.py
